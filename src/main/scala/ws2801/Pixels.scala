@@ -8,6 +8,7 @@ class Pixels(spiPort: Int, spiDevice: Int, count: Int) {
   val lsbFirst = false
 
   val device = new SpiDevice(spiPort, spiDevice, clockFrequency, clockMode, lsbFirst)
+  val pixels = Array.fill(count)(HSV(0, 0, 0))
   val array = new Array[Byte](count * 3)
 
   sys.addShutdownHook {

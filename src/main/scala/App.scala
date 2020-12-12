@@ -1,4 +1,5 @@
-import ws2801.Pixels
+import ws2801.HSV
+//import ws2801.Pixels
 
 object App {
   val count = 50
@@ -10,6 +11,7 @@ object App {
 
   def main(args: Array[String]): Unit = {
 
+    /*
     val pixels = new Pixels(0, 0, count)
 
     while(true) {
@@ -19,6 +21,13 @@ object App {
       pixels.show()
       Thread.sleep(500)
     }
+
+     */
+
+    val hsv = HSV(0, 1, 0.9)
+
+    println(255.toByte)
+    println(hsv.toRGB)
 
   }
 }
