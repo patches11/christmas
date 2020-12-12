@@ -2,7 +2,7 @@ package ws2801
 
 import com.diozero.api.{SpiClockMode, SpiDevice}
 
-class Pixels(spiPort: Int, spiDevice: Int, count: Int) {
+class Pixels(spiPort: Int, spiDevice: Int, val count: Int) {
   val clockFrequency = 1000000
   val clockMode = SpiClockMode.MODE_0
   val lsbFirst = false
@@ -19,17 +19,28 @@ class Pixels(spiPort: Int, spiDevice: Int, count: Int) {
     device.write(array)
   }
 
-  def setPixel(pixel: Int, r: Byte, g: Byte, b: Byte): Unit = {
+  def setPixel(pixel: Int, hsv: HSV): Unit = {
+    pixels.update(pixel, hsv)
+    val RGB(r, g, b) = hsv.toRGB
     array.update(pixel * 3, r)
     array.update(pixel * 3 + 1, g)
     array.update(pixel * 3 + 2, b)
   }
 
-  def setPixel(pixel: Int, rgb: RGB): Unit = {
-    setPixel(pixel, rgb.r, rgb.g, rgb.b)
+  def getPixel(pixel: Int): HSV = {
+    pixels(pixel)
   }
 
-  def getPixel(pixel: Int): RGB = {
-    RGB(array(pixel * 3), array(pixel * 3 + 1), array(pixel * 3 + 2))
+  def darkenPixel(pixel: Int, by: Double): HSV = {
+    val darkened = getPixel(pixel).darkenBy(by)
+    setPixel(pixel, darkened)
+    darkened
+  }
+
+
+  def lightenPixel(pixel: Int, by: Double): HSV = {
+    val lightened = getPixel(pixel).lightenBy(by)
+    setPixel(pixel, lightened)
+    lightened
   }
 }

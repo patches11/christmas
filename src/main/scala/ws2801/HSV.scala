@@ -10,12 +10,15 @@ object HSV {
         hsv.v - hsv.v * hsv.s * math.max(0, Array(k, 4 - k, 1).min)
       }
 
-      println((f(5), f(3), f(1)))
       RGB((f(5) * 255).toByte, (f(3) * 255).toByte, (f(1) * 255).toByte)
     }
 
     def darkenBy(d: Double): HSV = {
       HSV(hsv.h, hsv.s, math.max(hsv.v - d, 0))
+    }
+
+    def lightenBy(d: Double): HSV = {
+      HSV(hsv.h, hsv.s, math.min(hsv.v + d, 1))
     }
   }
 }
