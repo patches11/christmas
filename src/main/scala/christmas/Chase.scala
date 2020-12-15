@@ -29,10 +29,7 @@ class Chase(override val fps: Double) extends AnimationController with Animation
     }
   )
 
-  override protected var iteration: Long = 0
-  override protected var stepIteration: Long = 0
 
-  override val gracefullyExit: (Pixels, Long) => Boolean = (_, _) => true
   override val startup: (Pixels, Long) => Unit = (_, _) => ()
   override val run: (Pixels, Long) => Boolean = (pixels, _) => run(pixels)
 }

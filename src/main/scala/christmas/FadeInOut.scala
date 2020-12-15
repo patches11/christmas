@@ -39,10 +39,7 @@ class FadeInOut(override val fps: Double, val mainIterations: Int = 10) extends 
     }
   )
 
-  override protected var iteration: Long = 0
-  override protected var stepIteration: Long = 0
-
-  override val gracefullyExit: (Pixels, Long) => Boolean = steps.last.run
+  override def gracefullyExit(pixels: Pixels, iteration: Long): Boolean = steps.last.run(pixels, iteration)
   override val startup: (Pixels, Long) => Unit = steps.head.startup
 
   override val run: (Pixels, Long) => Boolean = (pixels, _) => run(pixels) && iteration % mainIterations == 0

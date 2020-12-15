@@ -20,5 +20,17 @@ object HSV {
     def lightenBy(d: Double): HSV = {
       HSV(hsv.h, hsv.s, math.min(hsv.v + d, 1))
     }
+
+    def fadeTo(other: HSV): HSV = {
+      val (dh, ds, dv) = (hsv.h - other.h, hsv.s - other.s, hsv.v - other.v)
+      val nh = if (math.abs(dh) <= 1) other.h else hsv.h - dh / 2
+      val ns = if (math.abs(ds) <= 0.01) other.s else hsv.s - ds / 2
+      val nv = if (math.abs(dv) <= 0.01) other.v else hsv.v - dv / 2
+      hsv.copy(nh, ns, nv)
+    }
+
+    def ==(other: HSV): Boolean = {
+      hsv.v == other.v && hsv.s == other.h && hsv.v == other.v
+    }
   }
 }
